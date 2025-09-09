@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <title>Calculator</title>
+     <link rel="stylesheet" href="cal.css">
+</head>
+<body>
+    <div class="container">
+        
+    <div class="calculator">
+       <input type="text" placeholder="0" id="display">
+       <button onclick="del()">DEL</button>
+       <button onclick="dis('1')">1</button>
+       <button onclick="dis('2')">2</button>
+       <button onclick="dis('3')">3</button>
+       <button onclick="dis('+')">+</button>
+       <button onclick="dis('4')">4</button>
+       <button onclick="dis('5')">5</button>
+       <button onclick="dis('6')">6</button>
+       <button onclick="dis('-')">-</button>
+       <button onclick="dis('7')">7</button>
+        <button onclick="dis('8')">8</button>
+        <button onclick="dis('9')">9</button>
+        <button onclick="dis('*')">*</button>
+        <button onclick="dis('0')">0</button>
+        <button onclick="dis('.')">.</button>
+        <button onclick="dis('/')">/</button>
+        <button onclick="calculate()" class="equal">=</button>
+    </div>
+    </div>
+    <script>
+        let input = document.getElementById('display');
+        function dis(num){
+            input.value += num;
+        }
+        function calculate(){
+            try{
+                input.value = eval(input.value);
+
+            }
+            catch(err){
+                alert("Invalid");
+            }
+            
+        }
+            function del(){
+                input.value = input.value.slice(0,-2);
+            }
+    </script>
+</body>
+</html>
