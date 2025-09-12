@@ -1,51 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <title>Calculator</title>
-     <link rel="stylesheet" href="cal.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="stylesheet" href="cal.css">
 </head>
 <body>
-    <div class="container">
-        
-    <div class="calculator">
-       <input type="text" placeholder="0" id="display">
-       <button onclick="del()">DEL</button>
-       <button onclick="dis('1')">1</button>
-       <button onclick="dis('2')">2</button>
-       <button onclick="dis('3')">3</button>
-       <button onclick="dis('+')">+</button>
-       <button onclick="dis('4')">4</button>
-       <button onclick="dis('5')">5</button>
-       <button onclick="dis('6')">6</button>
-       <button onclick="dis('-')">-</button>
-       <button onclick="dis('7')">7</button>
-        <button onclick="dis('8')">8</button>
-        <button onclick="dis('9')">9</button>
-        <button onclick="dis('*')">*</button>
-        <button onclick="dis('0')">0</button>
-        <button onclick="dis('.')">.</button>
-        <button onclick="dis('/')">/</button>
-        <button onclick="calculate()" class="equal">=</button>
-    </div>
-    </div>
-    <script>
-        let input = document.getElementById('display');
-        function dis(num){
-            input.value += num;
-        }
-        function calculate(){
-            try{
-                input.value = eval(input.value);
+  <div class="calculator">
+    <input id="display" readonly>
 
-            }
-            catch(err){
-                alert("Invalid");
-            }
-            
-        }
-            function del(){
-                input.value = input.value.slice(0,-2);
-            }
-    </script>
+    <div class="keys">
+      <button data-a="C">C</button><button data-a="⌫">⌫</button><button data-v="%">%</button><button data-v="/">÷</button>
+      <button data-v="7">7</button><button data-v="8">8</button><button data-v="9">9</button><button data-v="*">x</button>
+      <button data-v="4">4</button><button data-v="5">5</button><button data-v="6">6</button><button data-v="-">-</button>
+      <button data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="+">+</button>
+      <button data-v="0" class="zero">0</button><button data-v=".">.</button><button data-a="=">=</button>
+    </div>
+  </div>
+
+ <script>
+const d = document.getElementById('display');
+
+// Mouse/touch clicks (same as before)
+document.querySelector('.keys').onclick = e => {
+  const v = e.target.dataset.v, a = e.target.dataset.a;
+  if (!v && !a) return;
+  handleKey(v, a);
+};
+
+// 🔑 NEW: Keyboard support
+document.addEventListener('keydown', e => {
+  const key = e.key;
+
+  if (/[0-9+\-*/.%]/.test(key)) {
+    handleKey(key);                 // digits & operators
+  } else if (key === 'Enter' || key === '=') {
+    handleKey(null, '=');           // equals
+  } else if (key === 'Backspace') {
+    handleKey(null, '⌫');           // delete
+  } else if (key.toLowerCase() === 'c') {
+    handleKey(null, 'C');           // clear
+  }
+});
+
+// Common handler for clicks & keys
+function handleKey(v, a) {
+  switch (a) {
+    case 'C': d.value = ''; break;
+    case '⌫': d.value = d.value.slice(0,-1); break;
+    case '=': 
+      try { d.value = Function('"use strict";return('+d.value+')')(); }
+      catch { d.value = 'Error'; }
+      break;
+    default: d.value += v;
+  }
+}
+</script>
+
 </body>
 </html>
