@@ -22,19 +22,19 @@
  <script>
 const d = document.getElementById('display');
 
-// Mouse/touch clicks (same as before)
+
 document.querySelector('.keys').onclick = e => {
   const v = e.target.dataset.v, a = e.target.dataset.a;
   if (!v && !a) return;
   handleKey(v, a);
 };
 
-// 🔑 NEW: Keyboard support
+
 document.addEventListener('keydown', e => {
   const key = e.key;
 
   if (/[0-9+\-*/.%]/.test(key)) {
-    handleKey(key);                 // digits & operators
+    handleKey(key);                 // operators
   } else if (key === 'Enter' || key === '=') {
     handleKey(null, '=');           // equals
   } else if (key === 'Backspace') {
@@ -44,7 +44,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// Common handler for clicks & keys
+
 function handleKey(v, a) {
   switch (a) {
     case 'C': d.value = ''; break;
