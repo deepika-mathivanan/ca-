@@ -1,4 +1,4 @@
-/* General layout */
+
 body {
   margin: 0;
   background: #f1f3f6;
@@ -19,7 +19,7 @@ body {
 }
 
 #display {
-  width: 100%;
+  width: 95%;
   height: 60px;
   font-size: 2em;
   text-align: right;
